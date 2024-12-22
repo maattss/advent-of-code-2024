@@ -2,4 +2,5 @@
 
 // Day1.Calculate();
 // Day2.CalculateSafeReports();
-Day3.CalculateTotal();
+// Day3.CalculateTotal();
+Day4.Parsegrid();
