@@ -24,6 +24,7 @@ public static class Day2
 
         stopwatch.Stop();
         var elapsedMs = stopwatch.ElapsedMilliseconds;
+        
         Console.WriteLine($"Number of safe reports: {safeCount} (calculated in: {elapsedMs} ms)");
     }
 
