@@ -16,7 +16,7 @@ public static class Day2
         {
             var levels = line.Split(' ').Select(int.Parse).ToArray();
             
-            if (IsSafe(levels))
+            if (IsSafe(levels) || CanBeSafeWithOneRemoval(levels))
             {
                 safeCount++;
             }
@@ -70,5 +70,21 @@ public static class Day2
         }
 
         return true;
+    }
+    
+    static bool CanBeSafeWithOneRemoval(int[] levels)
+    {
+        for (var i = 0; i < levels.Length; i++)
+        {
+            // Create a new array without the i-th level
+            var modifiedLevels = levels.Where((_, index) => index != i).ToArray();
+
+            if (IsSafe(modifiedLevels))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
