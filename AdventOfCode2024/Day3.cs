@@ -11,17 +11,17 @@ public static class Day3
     {
         var stopwatch = Stopwatch.StartNew();
         
-        string mulPattern = @"mul\((\d{1,3}),(\d{1,3})\)";
-        string controlPattern = @"do\(\)|don't\(\)";
+        var mulPattern = @"mul\((\d{1,3}),(\d{1,3})\)";
+        var controlPattern = @"do\(\)|don't\(\)";
 
         var mulRegex = new Regex(mulPattern);
         var controlRegex = new Regex(controlPattern);
 
-        int total = 0;
-        bool isEnabled = true; // Multiplications are enabled by default
+        var total = 0;
+        var isEnabled = true; // Multiplications are enabled by default
 
         // Process input character by character
-        for (int i = 0; i < Input.Length;)
+        for (var i = 0; i < Input.Length;)
         {
             // Check for control instructions
             var controlMatch = controlRegex.Match(Input, i);
