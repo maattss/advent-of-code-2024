@@ -11,22 +11,57 @@ public static class Day3
     {
         var stopwatch = Stopwatch.StartNew();
         
-        const string pattern = @"mul\((\d{1,3}),(\d{1,3})\)";
-        var regex = new Regex(pattern);
+        string mulPattern = @"mul\((\d{1,3}),(\d{1,3})\)";
+        string controlPattern = @"do\(\)|don't\(\)";
 
-        var total = 0;
+        var mulRegex = new Regex(mulPattern);
+        var controlRegex = new Regex(controlPattern);
 
-        // Find all matches of the valid mul instructions
-        var matches = regex.Matches(Input);
+        int total = 0;
+        bool isEnabled = true; // Multiplications are enabled by default
 
-        foreach (Match match in matches)
+        // Process input character by character
+        for (int i = 0; i < Input.Length;)
         {
-            // Parse the two numbers X and Y
-            var x = int.Parse(match.Groups[1].Value);
-            var y = int.Parse(match.Groups[2].Value);
+            // Check for control instructions
+            var controlMatch = controlRegex.Match(Input, i);
+            if (controlMatch.Success && controlMatch.Index == i)
+            {
+                if (controlMatch.Value == "do()")
+                {
+                    isEnabled = true;
+                }
+                else if (controlMatch.Value == "don't()")
+                {
+                    isEnabled = false;
+                }
 
-            // Multiply and add to the total
-            total += x * y;
+                // Move past this match
+                i += controlMatch.Length;
+                continue;
+            }
+
+            // Check for valid mul instructions
+            var mulMatch = mulRegex.Match(Input, i);
+            if (mulMatch.Success && mulMatch.Index == i)
+            {
+                if (isEnabled)
+                {
+                    // Parse the two numbers X and Y
+                    int x = int.Parse(mulMatch.Groups[1].Value);
+                    int y = int.Parse(mulMatch.Groups[2].Value);
+
+                    // Multiply and add to the total
+                    total += x * y;
+                }
+
+                // Move past this match
+                i += mulMatch.Length;
+                continue;
+            }
+
+            // Move to the next character if no match found
+            i++;
         }
 
         stopwatch.Stop();
